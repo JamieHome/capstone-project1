@@ -19,14 +19,16 @@ var getOrPost = (options) => {
     options
   );
   var loadingInstance = Loading.service({
-    fullscreen: true
+    fullscreen: true,
+    text: '正在加载',
+    background:'rgba(0,0,0,0.1)'
   });
   return new Promise((resolve, reject) => {
     axios(setting)
       .then((res) => {
         setTimeout(() => {
           loadingInstance.close();
-        }, 200);
+        }, 300);
         var content = res.data.data;
         var data = res.data;
         var res = res;
@@ -46,7 +48,7 @@ var getOrPost = (options) => {
       .catch(message => {
         setTimeout(() => {
           loadingInstance.close();
-        }, 200);
+        }, 300);
         Notification({
           type: "error",
           message: message
