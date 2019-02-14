@@ -1,6 +1,8 @@
 <template>
   <!-- <div class="Login" @click="func">login</div> -->
   <div class="loginwap">
+    <el-button @click="funcGet">funcGet</el-button>
+    <el-button @click="funcPost">funcPost</el-button>
     <div class="loginimg">
       <div class="logindiv">
         <p class="logintitle">校园休闲娱乐生活平台</p>
@@ -35,16 +37,23 @@ export default {
     }
   },
   methods:{
-    func(){
+    funcGet(){
       request({
         method:"get",
         params:{a:1},
-        data:JSON.stringify([{a:1}]),
-        url:"http://localhost:9999/test"
+        url:"/node-web/user/logout"
       }).then(res => {
         console.log(res)
       })
-
+    },
+    funcPost(){
+      request({
+        method:"post",
+        data:JSON.stringify({username:"jack",password:"a12345"}),
+        url:"/node-web/user/login"
+      }).then(res => {
+        console.log(res)
+      })
     }
   }
 }

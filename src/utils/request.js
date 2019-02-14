@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "../router/index";
 import {
   Notification,
   Loading
@@ -26,17 +27,20 @@ var getOrPost = (options) => {
         setTimeout(() => {
           loadingInstance.close();
         }, 200);
-        var content = res.data.content;
+        var content = res.data.data;
         var data = res.data;
         var res = res;
         if (res.data.status == 1) {
           resolve(content, data, res);
-        } else {
+        } else if(res.data.status == 2) {
           if (setting.hasMutipleStatus) {
             resolve(content, data, res);
           } else {
             return Promise.reject(res.data.message, res);
           }
+        }else if(res.data.status == 10){
+          router.push("/");
+          return Promise.reject("请登录", res);
         }
       })
       .catch(message => {
