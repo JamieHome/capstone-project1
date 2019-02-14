@@ -1,8 +1,8 @@
 <template>
   <div class="HomePageMenu clearfix">
-    <div class="menuLeft">11</div>
+    <div class="menuLeft"></div>
     <div class="menuRight">
-      <el-button @click="login" size="mini">登录</el-button>
+      <el-button @click="login" size="small" class="login">登录</el-button>
     </div>
     <div class="menuSection">
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" router>
@@ -18,10 +18,11 @@ export default {
     return {
       activeIndex: "one",
       menuList: [
-        { index: "one", name: "page1" },
-        { index: "tow", name: "page2" },
-        { index: "three", name: "page3" },
-        { index: "four", name: "page4" },
+        { index: "one", name: "首页 " },
+        { index: "tow", name: "信息模块" },
+        { index: "three", name: "班级活动模块" },
+        { index: "four", name: "公告模块" },
+        { index: "five", name:"基础资料"}
       ]
     }
   },

@@ -3,7 +3,8 @@
     <div ref="homePageHeader" class="homePageHeader">
       <HomePageMenu></HomePageMenu>
     </div>
-    <div :style="{minHeight:homePageContainerHeight + 'px'}" class="homePageContainer">
+    <!-- <div :style="{minHeight:homePageContainerHeight + 'px'}" class="homePageContainer"> -->
+    <div class="homePageContainer">
       <router-view/>
     </div>
     <div ref="homePageFooter" class="homePageFooter">
@@ -25,7 +26,7 @@ export default {
     }
   },
   mounted(){
-    debugger
+    //debugger
 
     var headerHeight = this.$refs.homePageHeader.offsetHeight;
     var footerHeight = this.$refs.homePageFooter.offsetHeight;
