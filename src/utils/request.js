@@ -41,7 +41,9 @@ var getOrPost = (options) => {
             return Promise.reject(res.data.message, res);
           }
         }else if(res.data.status == 10){
-          router.push("/");
+          if(window.confirm("请登录")){
+            router.push("/login");
+          }
           return Promise.reject("请登录", res);
         }
       })
