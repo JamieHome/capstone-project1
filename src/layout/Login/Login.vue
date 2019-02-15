@@ -1,6 +1,8 @@
 <template>
   <!-- <div class="Login" @click="func">login</div> -->
   <div class="loginwap">
+    <el-button @click="funcGet">funcGet</el-button>
+    <el-button @click="funcPost">funcPost</el-button>
     <div class="loginimg">
       <div class="logindiv">
         <p class="logintitle">校园休闲娱乐生活平台</p>
@@ -10,29 +12,16 @@
             <input id="username" type="text" placeholder="请输入用户名">
           </p>
           <p class="pass">
-          密&nbsp;&nbsp;&nbsp;码
+          密&nbsp;&nbsp;&nbsp;&nbsp;码
            <input id="password" type="password" placeholder="请输入密码">
           </p>
           <p class="check">
             <el-checkbox v-model="checked">记住密码</el-checkbox>
-            <span style="margin-left:120px;" @click="register">现在注册?</span>
+            <a href=""><span style="margin-left:130px;">忘记密码?</span></a>
           </p>
-          <p class="login" @click="login">登录</p>
+          <p class="login">登录</p>
         </div>
-        <el-dialog title="注册" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
-           <p class="user">
-          用户名
-            <input id="username" type="text" placeholder="请输入用户名">
-          </p>
-          <p class="pass">
-          密&nbsp;&nbsp;&nbsp;码
-           <input id="password" type="password" placeholder="请输入密码">
-          </p>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogRegisterCancle">取 消</el-button>
-            <el-button type="primary" @click="dialogRegisterConfirm">确 定</el-button>
-          </span>
-        </el-dialog>
+
       </div>
     </div>
   </div>
@@ -44,44 +33,28 @@ export default {
   name:"Login",
   data(){
     return{
-      checked: true,
-      dialogVisible : false ,
+      checked: true
     }
   },
   methods:{
-    func(){
+    funcGet(){
       request({
         method:"get",
         params:{a:1},
-        data:JSON.stringify([{a:1}]),
-        url:"http://localhost:9999/test"
+        url:"/node-web/user/logout"
       }).then(res => {
         console.log(res)
       })
     },
-    login(){
-      console.log(123);
-    },
-    dialogRegisterCancle(){
-      this.dialogVisible = false;
-    },
-    dialogRegisterConfirm(){
-      this.dialogVisible = false;
-    },
-    //点击X关闭弹窗
-    handleClose(done) {
-      this.$confirm('确认关闭？')
-      .then(_ => {
-        done();
+    funcPost(){
+      request({
+        method:"post",
+        data:JSON.stringify({username:"jack",password:"a12345"}),
+        url:"/node-web/user/login"
+      }).then(res => {
+        console.log(res)
       })
-      .catch(_ => {
-      });
-    },
-    //点击注册
-    register(){
-      this.dialogVisible = true;
     }
-
   }
 }
 </script>
