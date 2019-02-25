@@ -28,12 +28,12 @@ export default {
     return {
       activeIndex: "one",
       menuList: [
-        { index: "one", name: "首页 " },
-        { index: "tow", name: "信息模块" },
-        { index: "three", name: "班级活动模块" },
-        { index: "four", name: "公告模块" },
-        { index: "five", name:"用户管理"},
-        { index: "six",name:"发布公告"},
+        { index: "one", name: "首页",show:true },
+        { index: "tow", name: "信息模块",show:true },
+        { index: "three", name: "班级活动模块",show:true },
+        { index: "four", name: "公告模块",show:true },
+        { index: "five", name:"用户管理",show:sessionStorage.getItem("role") == "1"},
+        { index: "six",name:"发布公告",show:sessionStorage.getItem("role") == "1"},
       ]
     }
   },
@@ -63,6 +63,7 @@ export default {
   mounted(){
     var hash = window.location.hash.replace(/^#\//,"");
     if (hash) this.activeIndex = hash;
+    this.menuList = this.menuList.filter(v=>v.show);
   }
 }
 </script>

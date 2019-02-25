@@ -1,5 +1,4 @@
 import axios from "axios";
-import router from "../main";
 import {
   Notification,
   Loading
@@ -42,7 +41,7 @@ var getOrPost = (options) => {
           }
         }else if(res.data.status == 10){
           if(window.confirm("请登录")){
-            router.push("/login");
+            window.location.href = "/#/login";
           }
           return Promise.reject("请登录", res);
         }

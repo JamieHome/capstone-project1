@@ -112,14 +112,15 @@ export default {
         method:"post",
         data:JSON.stringify({username:this.username,password:this.password}),
         url:"/node-web/user/login"
-      }).then(res => {
+      }).then(data => {
+        sessionStorage.setItem("role",data.role);
         this.$notify({
           message: '登录成功！',
           type: 'success'
         });
         this.$router.push("/");
       })
-    }
+    },
 
     // funcGet(){
     //   request({
