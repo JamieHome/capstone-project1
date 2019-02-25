@@ -1,55 +1,65 @@
 <template>
-  <el-container>
-  <el-aside width="200px">
-    <ul>
-      <li style="font-size:18px;">公告列表</li>
-      <li style="margin-top:2px;">献血倡议书</li>
-      <li>冬季运动会事项</li>
-      <li>宿舍管理章程</li>
-    </ul>
-  </el-aside>
-  <el-container>
-    <el-header>
-      <div class="title">献血倡议书</div>
-    </el-header>
-    <el-main>
-      <p class="" style="">血液是生命的源泉；爱是生命的曙光！下面整理了三篇</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋月的到来，雷锋精神一时间在我在里传播开来。这时，您是月的到来，雷锋精神一时间在我在里传播开来。这时，您是月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是月的到来，雷锋精神一时间在我在里传播开来。这时，您是月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-      <p>在春风和煦，大地回春的三月，随着一年一度的学雷锋</p>
-      <p>月的到来，雷锋精神一时间在我在里传播开来。这时，您是</p>
-    </el-main>
-  </el-container>
-</el-container>
+  <div class=" m-t-20">
+    <el-container>
+      <el-main>
+        <div class="form-information">
+          <el-table ref="singleTable" :data="noticeList" highlight-current-row @current-change="handleCurrentChange" @row-click="seeAnnouncement" style="width: 100%">
+            <el-table-column type="index" width="70">
+            </el-table-column>
+            <el-table-column property="noticeTitle" label="公告标题">
+            </el-table-column>
+            <el-table-column property="updatedAt" label="发布时间" width="160px">
+              <template slot-scope="scope">
+            <div>{{scope.row.updatedAt | formatDateTime }}</div>
+          </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-main>
+    </el-container>
+    <el-dialog title="查看公告" :visible.sync="dialogseeAnnouncement" width="80%" height="60%">
+      <div class="seeAnnouncementTitle">{{noticeTitle}}</div>
+      <div class="seeAnnouncementContent">{{noticeContent}}</div>
+    </el-dialog>
+  </div>
 </template>
 <script>
+import request from "../../utils/request.js";
 export default {
    name:"FourPage",
+  mounted(){
+    request({
+      method:"get",
+      params:{},
+      url:"/node-web/notice/list"
+    }).then(res => {
+      console.log(res);
+      this.noticeList =  res;
+    })
+  },
   data() {
     return {
-
+      noticeList:[],
+      noticeTitle:"",
+      noticeContent:"",
+      dialogseeAnnouncement:false,
+    }
+  },
+  methods:{
+    handleCurrentChange(val) {
+        this.currentRow = val;
+    },
+    seeAnnouncement(currentRow){
+       request({
+         method:"get",
+         params:{noticeCode:this.currentRow.noticeCode},
+         url:"/node-web/notice/detail"
+       }).then(res => {
+         // console.log(res.noticeTitle);
+         this.noticeTitle =  this.currentRow.noticeTitle;
+         this.noticeContent = this.currentRow.noticeContent;
+         this.dialogseeAnnouncement=true;
+       })
     }
   }
 

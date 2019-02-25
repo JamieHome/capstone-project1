@@ -7,10 +7,12 @@ import SecondPage from '@/components/SecondPage/SecondPage.vue'
 import FivePage from '@/components/FivePage/FivePage.vue'
 import ThirdPage from '@/components/ThirdPage/ThirdPage.vue'
 import Fourpage from '@/components/Fourpage/Fourpage.vue'
+import SixPage from '@/components/SixPage/SixPage.vue'
 
 
 
 
+// debugger
 var routes = [
   {
     path: '/',
@@ -22,6 +24,7 @@ var routes = [
       {path:"three",name:"three",component:ThirdPage},
       {path:"four",name:"four",component:Fourpage},
       {path:"five",name:"five",component:FivePage},
+      {path:"six",name:"six",component:SixPage}
     ]
   },
   { path:"/login",name:"Login",component:Login }

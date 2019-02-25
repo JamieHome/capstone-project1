@@ -2,7 +2,16 @@
   <div class="HomePageMenu clearfix">
     <div class="menuLeft"></div>
     <div class="menuRight">
-      <el-button @click="login" size="small" class="login">登录</el-button>
+      <!-- <el-button type="text" @click = "quitLogin">退出登录</el-button> -->
+      <el-dropdown @command="handleCommand" trigger="click">
+      <span class="el-dropdown-link el-icon-setting" >
+        下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="01">修改密码</el-dropdown-item>
+        <el-dropdown-item command="02">退出登录</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
     </div>
     <div class="menuSection">
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" router>
@@ -12,6 +21,7 @@
   </div>
 </template>
 <script>
+import request from "../../utils/request.js";
 export default {
   name: "HomePageMenu",
   data() {
@@ -22,14 +32,37 @@ export default {
         { index: "tow", name: "信息模块" },
         { index: "three", name: "班级活动模块" },
         { index: "four", name: "公告模块" },
-        { index: "five", name:"基础资料"}
+        { index: "five", name:"用户管理"},
+        { index: "six",name:"发布公告"},
       ]
     }
   },
   methods: {
+    handleCommand(command){
+      console.log(command)
+      if(command == "02"){
+        request({
+        method:"get",
+        params:{},
+        url:"/node-web/user/logout"
+      }).then(res => {
+        this.$notify({
+          message: '退出登录成功！',
+          type: 'success'
+        });
+        console.log(res);
+        this.$router.push({ name: "Login" })
+      })
+      }
+
+    },
     login() {
       this.$router.push({ name: "Login" })
-    }
+    },
+  },
+  mounted(){
+    var hash = window.location.hash.replace(/^#\//,"");
+    if (hash) this.activeIndex = hash;
   }
 }
 </script>

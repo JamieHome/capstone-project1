@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/node-web': {
-        // target: 'http://120.27.209.87:8899',
-        target: 'http://localhost:8899',
+        target: 'http://120.27.209.87:8899',
+        // target: 'http://localhost:8899',
         changeOrigin: true,
         pathRewrite: {
             '^/node-web': '/node-web'

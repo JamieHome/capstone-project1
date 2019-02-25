@@ -2,8 +2,12 @@
 <div class="block SecondPage m-t-20">
   <el-container>
     <el-aside width="150px">
+      <div style="height:60px;line-height:80px;font-size:20px;">年级</div>
       <ul>
-      <li>班级活动列表</li>
+      <a href="#"><li>2015级</li></a>
+      <a href="#"><li>2016级</li></a>
+      <a href="#"><li>2017级</li></a>
+      <a href="#"><li>2018级</li></a>
       </ul>
     </el-aside>
     <el-container>
@@ -16,27 +20,19 @@
     </el-header>
     <el-main>
       <el-table :data="tableData1" border>
-        <el-table-column prop="grade" label="年级" width="120">
+        <el-table-column prop="grade" label="活动年级" width="120">
+        </el-table-column>
+        <el-table-column prop="major" label="专业" width="150">
         </el-table-column>
         <el-table-column prop="ActivityPublisher" label="活动发布人" width="120">
         </el-table-column>
-        <el-table-column prop="ActivitystartDate" label="活动开始时间" width="140">
+        <el-table-column prop="ActivitystartDate" label="活动开始时间" width="120">
         </el-table-column>
-        <el-table-column prop="ActivityendDate" label="活动结束时间" width="140">
+        <el-table-column prop="ActivityendDate" label="活动结束时间" width="120">
         </el-table-column>
-        <el-table-column prop="ActivityType" label="活动类型">
+        <el-table-column prop="ActivityContent" label="活动内容" width="220">
         </el-table-column>
         <el-table-column prop="ActivityAddress" label="活动地址">
-        </el-table-column>
-        <el-table-column fixed="right" label="操作" width="120">
-          <template slot-scope="scope">
-            <el-button @click.native.prevent="deleteRow(scope.$index, tableData4)" type="text" size="small">
-             详情
-            </el-button>
-            <el-button @click.native.prevent="deleteRow(scope.$index, tableData4)" type="text" size="small">
-             作废
-            </el-button>
-          </template>
         </el-table-column>
       </el-table>
       <!-- <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination> -->
@@ -45,27 +41,38 @@
   </el-container>
   <!-- 新增 -->
   <el-dialog title="新增" :visible.sync="dialogFormVisible">
-    <el-form :model="form">
-      <div class="block">
-        <el-form-item label="姓名">
-        <el-input v-model="form.stuName"></el-input>
+    <el-form ref="form" :model="form" label-width="80px">
+
+      <el-form-item label="年级">
+        <el-select v-model="form.region" placeholder="请选择年级">
+          <el-option label="2015级" value="2015"></el-option>
+          <el-option label="2016级" value="2016"></el-option>
+          <el-option label="2017级" value="2017"></el-option>
+          <el-option label="2018级" value="2018"></el-option>
+        </el-select>
       </el-form-item>
-        <el-cascader
-          :options="options"
-          v-model="selectedOptions"
-          @change="handleChange">
-        </el-cascader>
-      </div>
-      <div class="block m-t-10">
-        <el-date-picker
-          v-model="value4"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
-        </el-date-picker>
-      </div>
-    </el-form>
+      <el-form-item label="专业">
+        <input type="text" class="myinput">
+      </el-form-item>
+      <el-form-item label="活动内容">
+        <input type="text" class="myinput">
+      </el-form-item>
+
+      <el-form-item label="活动地址">
+        <input type="text" class="myinput">
+      </el-form-item>
+      <el-form-item label="活动时间">
+        <div class="block">
+          <el-date-picker
+            v-model="activityTime"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+          </el-date-picker>
+        </div>
+      </el-form-item>
+      </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormCancle">取 消</el-button>
       <el-button type="primary" @click="dialogFormConfirm">确 定</el-button>
@@ -85,8 +92,9 @@ export default {
         ActivityPublisher:'王大明',
         ActivitystartDate: '2016-05-02',
         ActivityendDate: '2016-05-02',
-        ActivityType:'聚餐',
-        ActivityAddress:'中海国际',
+        ActivityContent:'在东B301开团日会',
+        ActivityAddress:'中海国际11号骉骉老火锅',
+        major:'信息管理与信息系统'
       };
       return {
         tableData1: Array(80).fill(item),
@@ -96,173 +104,7 @@ export default {
           region:'',
         },
         formLabelWidth:'120px',
-        options: [{
-          value: '01',
-          label: '篮球',
-          children: [{
-            value: '011',
-            label: '红区球场',
-            children: [{
-              value: '0111',
-              label: '1号球场'
-            }, {
-              value: '0112',
-              label: '2号球场'
-            }, {
-              value: '0113',
-              label: '3号球场'
-            }, {
-              value: '0114',
-              label: '4号球场'
-            }]
-          }, {
-            value: '012',
-            label: '蓝区1号球场',
-            children: [{
-              value: '0121',
-              label: '1号球场'
-            }, {
-              value: '0122',
-              label: '2号球场'
-            }, {
-              value: '0123',
-              label: '3号球场'
-            }, {
-              value: '0124',
-              label: '4号球场'
-            }, {
-              value: '0125',
-              label: '5号球场'
-            }, {
-              value: '0126',
-              label: '6号球场'
-            }, {
-              value: '0127',
-              label: '7号球场'
-            }]
-          },
-          {
-            value: '013',
-            label: '蓝区2号球场',
-            children: [{
-              value: '0131',
-              label: '1号球场'
-            }, {
-              value: '0132',
-              label: '2号球场'
-            }, {
-              value: '0133',
-              label: '3号球场'
-            }, {
-              value: '0134',
-              label: '4号球场'
-            }, {
-              value: '0135',
-              label: '5号球场'
-            }, {
-              value: '0136',
-              label: '6号球场'
-            }, {
-              value: '0137',
-              label: '7号球场'
-            }]
-          }]
-        }, {
-          value: '02',
-          label: '足球',
-          children: [{
-            value: '021',
-            label: '蓝区体育场',
-          }]
-        },{
-          value: '03',
-          label: '乒乓球',
-          children: [{
-            value: '031',
-            label: '红区球场',
-            children: [{
-              value: '0311',
-              label: '1号球场'
-            }, {
-              value: '0312',
-              label: '2号球场'
-            }, {
-              value: '0313',
-              label: '3号球场'
-            }, {
-              value: '0314',
-              label: '4号球场'
-            }, {
-              value: '0315',
-              label: '5号球场'
-            }, {
-              value: '0316',
-              label: '6号球场'
-            }, {
-              value: '0317',
-              label: '7号球场'
-            }, {
-              value: '018',
-              label: '8号球场'
-            }]
-          }, {
-            value: '032',
-            label: '蓝区1号球场',
-            children: [{
-              value: '0321',
-              label: '1号球场'
-            }, {
-              value: '0322',
-              label: '2号球场'
-            }, {
-              value: '0323',
-              label: '3号球场'
-            }, {
-              value: '0324',
-              label: '4号球场'
-            }, {
-              value: '0325',
-              label: '5号球场'
-            }, {
-              value: '0326',
-              label: '6号球场'
-            }, {
-              value: '0327',
-              label: '7号球场'
-            }]
-          },]
-        }],
-        selectedOptions: [],
-        selectedOptions2: [],
-         pickerOptions2: {
-          shortcuts: [{
-            text: '最近一周',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近一个月',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近三个月',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
-            }
-          }]
-        },
-        value4: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-        value5: ''
+        activityTime:'',
       }
   },
   methods:{
@@ -273,7 +115,7 @@ export default {
       this.dialogFormVisible = false;
     },
     handleChange(value) {
-        console.log(value);
+        // console.log(value);
       }
   }
 }

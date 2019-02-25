@@ -1,6 +1,6 @@
 <template>
   <div class="block FirstPage m-t-20">
-    <informationdialog></informationdialog>
+    <!-- <informationdialog></informationdialog> -->
     <el-carousel height="550px">
       <el-carousel-item v-for="item in imgList" :key="item.id">
         <img ref="imgHeight" :src="item.idView" style="width:1321px;height:550px;"/>
@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import informationdialog from "@/components/informationdialog/informationdialog.vue";
+// import informationdialog from "@/components/informationdialog/informationdialog.vue";
 export default {
   name: "FirstPage",
   data() {
